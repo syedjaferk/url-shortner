@@ -1,1 +1,3 @@
 urlEnv/
+*.pyc
+__pycache__
