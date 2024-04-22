@@ -30,5 +30,5 @@ class ShortUrls(models.Model):
 
     def generate_short_code(self):
         characters = string.ascii_letters + string.digits
-        short_code = ''.join(random.choice(characters) for _ in range(6))
+        short_code = ''.join(random.choice(characters) for _ in range(8))
         return short_code
