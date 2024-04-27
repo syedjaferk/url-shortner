@@ -8,6 +8,8 @@ import random
 from datetime import datetime, timedelta
 from django.utils import timezone
 from django.db import models
+from shortner.unique_id_generator.gen_twitter_snowflake_id import Snowflake
+from shortner.unique_id_generator.to_base_62 import to_base62
 
 
 class ShortUrls(models.Model):
@@ -45,14 +47,7 @@ class ShortUrls(models.Model):
         return super().save(*args, **kwargs)
 
     def generate_short_code(self):
-        """        Generate a short code consisting of alphanumeric characters.
-
-        This function generates a random short code of length 8 using alphanumeric characters.
-
-        Returns:
-            str: A randomly generated short code.
-        """
-
-        characters = string.ascii_letters + string.digits
-        short_code = ''.join(random.choice(characters) for _ in range(8))
+        snowflake = Snowflake(worker_id=10)
+        val = snowflake.generate_id()
+        short_code = to_base62(val)
         return short_code
