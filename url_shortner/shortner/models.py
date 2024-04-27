@@ -1,15 +1,10 @@
 """
 Models for ShortUrls
 """
-import uuid
-import pytz
-import string
-import random
-from datetime import datetime, timedelta
+from datetime import timedelta
 from django.utils import timezone
 from django.db import models
-from shortner.unique_id_generator.gen_twitter_snowflake_id import Snowflake
-from shortner.unique_id_generator.to_base_62 import to_base62
+from shortner.unique_id_generator.id_generator import IdGenerator
 
 
 class ShortUrls(models.Model):
@@ -47,7 +42,5 @@ class ShortUrls(models.Model):
         return super().save(*args, **kwargs)
 
     def generate_short_code(self):
-        snowflake = Snowflake(worker_id=10)
-        val = snowflake.generate_id()
-        short_code = to_base62(val)
-        return short_code
+        id_gen = IdGenerator()
+        return id_gen.generate_id()

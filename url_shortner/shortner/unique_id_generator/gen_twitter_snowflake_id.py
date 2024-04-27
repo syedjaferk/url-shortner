@@ -32,7 +32,7 @@ class Snowflake:
         if timestamp == self.last_timestamp:
             self.sequence = (self.sequence + 1) & self.max_sequence
             if self.sequence == 0:
-                timestamp = self.wait_til_next_millis(self.last_timestamp)
+                timestamp = self._wait_til_next_millis(self.last_timestamp)
         else:
             self.sequence = 0
 
@@ -41,7 +41,7 @@ class Snowflake:
         snowflake_id = ((timestamp - self.epoch) << self.timestamp_shift) | (self.worker_id << self.worker_id_shift) | self.sequence
         return snowflake_id
 
-    def wait_til_next_millis(self, last_timestamp):
+    def _wait_til_next_millis(self, last_timestamp):
         timestamp = self._generate_timestamp()
         while timestamp <= last_timestamp:
             timestamp = self._generate_timestamp()
