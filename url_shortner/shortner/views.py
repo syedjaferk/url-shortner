@@ -21,8 +21,12 @@ class GetShortenUrl(View):
         Returns:
             dict: A JSON response containing the original URL corresponding to the reference ID.
         """
-        url_object = ShortUrls.objects.filter(referenceId=referenceId)[0]
-        return JsonResponse({'url': url_object.url})
+        filtered_objects = ShortUrls.objects.filter(referenceId=referenceId)
+        if filtered_objects.count() > 0:
+            url_object = filtered_objects[0]
+            return JsonResponse({'url': url_object.url})
+        else:
+            return JsonResponse({'message': 'Given url not found'})
 
 class CreateShortUrl(View):
     """
@@ -43,7 +47,11 @@ class CreateShortUrl(View):
         """
         request_data = json.loads(request.body)
         url = request_data.get("url")
-        short_url_obj = ShortUrls(url=url)
-        short_url_obj.save()
+        filtered_objects = ShortUrls.objects.filter(url=url)
+        if filtered_objects.count() == 0:
+            short_url_obj = ShortUrls(url=url)
+            short_url_obj.save()
+        else:
+            short_url_obj = filtered_objects[0]
         short_url = request.build_absolute_uri('/') + short_url_obj.referenceId
         return JsonResponse({'result': 'success', 'url': short_url})
