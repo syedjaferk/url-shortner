@@ -10,7 +10,11 @@ log = logging.getLogger("rest-api-short-urls")
 
 
 def get_headers():
-    """ It generated the api headers."""
+    """    It generates the API headers.
+
+    Returns:
+        dict: A dictionary containing the API headers.
+    """
     headers = {
         "Content-Type": "application/json"
     }
@@ -18,7 +22,11 @@ def get_headers():
 
 
 def get_api_payload():
-    """ It generated the body of request."""
+    """    It generates the body of a request.
+
+    Returns:
+        dict: A dictionary containing the URL for the request.
+    """
     payload = {
         "url": "https://stackoverflow.com/questions/15261000/how-can-i-generate-a-random-url-of-a-certain-length-every-time-a-page-is-created/" + str(uuid.uuid4())
     }
@@ -29,20 +37,38 @@ class LocustClient(FastHttpUser):
     wait_time = constant(0)
 
     def __init__(self, environment):
-        """ Class constructor."""
+        """        Class constructor.
+
+        Args:
+            environment: The environment for the class.
+        """
         super().__init__(environment)
 
     def on_start(self):
-        """ on_start is called when a Locust start before any task is scheduled """
+        """        on_start is called when a Locust start before any task is scheduled
+
+        This function is called when a Locust instance starts before any task is scheduled.
+        """
         pass
 
     def on_stop(self):
-        """ on_stop is called when the TaskSet is stopping """
+        """        on_stop is called when the TaskSet is stopping
+
+        This method is called when the TaskSet is stopping. It can be used to perform any cleanup or finalization tasks.
+        """
         pass
 
     @task
     def load_rest_api_based_service(self):
-        """ This method contains all the APIs that needs to be load tested for a service."""
+        """        This method contains all the APIs that need to be load tested for a service.
+
+        It sends a POST request to a specified host with the API payload and headers.
+        If the response status code is 200, it asserts the success of the API call; otherwise, it logs the failure.
+
+
+        Raises:
+            Exception: If an unexpected error occurs during the API call.
+        """
         headers = get_headers()
 
         try:
