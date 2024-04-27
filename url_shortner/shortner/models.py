@@ -42,5 +42,11 @@ class ShortUrls(models.Model):
         return super().save(*args, **kwargs)
 
     def generate_short_code(self):
+        """        Generate a short code using an IdGenerator instance.
+
+        Returns:
+            str: The generated short code.
+        """
+
         id_gen = IdGenerator()
         return id_gen.generate_id()
