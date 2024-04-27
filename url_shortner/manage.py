@@ -5,7 +5,13 @@ import sys
 
 
 def main():
-    """Run administrative tasks."""
+    """    Run administrative tasks.
+
+    This function sets up the Django settings and executes administrative tasks from the command line.
+
+    Raises:
+        ImportError: If Django is not installed or not available on the PYTHONPATH environment variable, or if a virtual environment is not activated.
+    """
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'url_shortner.settings')
     try:
         from django.core.management import execute_from_command_line
