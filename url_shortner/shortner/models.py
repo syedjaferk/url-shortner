@@ -47,6 +47,15 @@ class ShortUrls(models.Model):
         return super().save(*args, **kwargs)
 
     def generate_short_code(self):
+        """        Generate a short code using Snowflake algorithm and base62 encoding.
+
+        This function generates a short code using the Snowflake algorithm with a worker ID of 10,
+        and then encodes the generated ID using base62 encoding.
+
+        Returns:
+            str: The generated short code.
+        """
+
         snowflake = Snowflake(worker_id=10)
         val = snowflake.generate_id()
         short_code = to_base62(val)
