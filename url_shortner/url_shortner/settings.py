@@ -80,7 +80,7 @@ DATABASES = {
         'NAME': 'short_urls',
         'ENFORCE_SCHEMA': False,
         'CLIENT': {
-                'host': 'mongodb://localhost:27017,localhost:27018,localhost:27019/test?replicaSet=myReplicaSet&w=majority'
+                'host': 'mongodb://host.docker.internal:27017,host.docker.internal:27018/test?replicaSet=rs0&w=majority'
         }
     }
 }
