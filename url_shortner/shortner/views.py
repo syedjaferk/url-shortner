@@ -5,11 +5,21 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from shortner.models import ShortUrls
 
+from drf_yasg import openapi
+from drf_yasg.utils import swagger_auto_schema
+from rest_framework.decorators import api_view
+from rest_framework.views import APIView
 
-class GetShortenUrl(View):
+
+class GetShortenUrl(APIView):
     """
     View class to get the actual url given shortened url
     """
+    @swagger_auto_schema(
+        operation_summary="API to get the long url",
+        operation_description="API with the referenceId to get the actual url",
+        responses={200: "{'url': 'the long url'}", 400: 'Error response description'}
+    )
     @csrf_exempt
     def get(self, _, referenceId):
         """        Get method to handle the redirection of the shortened URL to the actual URL.

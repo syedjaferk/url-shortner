@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -38,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'drf_yasg'
 ]
 
 MIDDLEWARE = [
@@ -49,6 +51,15 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+SWAGGER_SETTINGS = {
+    'USE_SESSION_AUTH': False,
+    'SECURITY_DEFINITIONS': {
+        'Basic': {
+            'type': 'basic'
+        }
+    }
+}
 
 ROOT_URLCONF = 'url_shortner.urls'
 
@@ -80,7 +91,8 @@ DATABASES = {
         'NAME': 'short_urls',
         'ENFORCE_SCHEMA': False,
         'CLIENT': {
-                'host': 'mongodb://host.docker.internal:27017,host.docker.internal:27018/test?replicaSet=rs0&w=majority'
+                # 'host': 'mongodb://host.docker.internal:27017,host.docker.internal:27018/test?replicaSet=rs0&w=majority'
+                'host': 'mongodb://localhost:27017,localhost:27018/test?replicaSet=rs0&w=majority'
         }
     }
 }
@@ -120,7 +132,9 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATIC_URL = 'static/'
+PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
+STATIC_ROOT = os.path.join(PROJECT_DIR, 'static')
+STATIC_URL = '/static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
