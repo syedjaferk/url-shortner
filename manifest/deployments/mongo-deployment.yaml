@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongodb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mongodb
+  template:
+    metadata:
+      labels:
+        app: mongodb
+    spec:
+      containers:
+      - name: mongodb
+        image: mongo:7.0
+        ports:
+        - containerPort: 27017
+        # Define resource requests and limits as needed
+        resources:
+          requests:
+            cpu: "100m" # 100 milliCPU (0.1 CPU)
+            memory: "256Mi"
+          limits:
+            cpu: "500m" # 500 milliCPU (0.5 CPU)
+            memory: "512Mi"

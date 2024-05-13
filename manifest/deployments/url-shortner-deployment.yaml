@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: url-shortner
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: url-shortner
+  template:
+    metadata:
+      labels:
+        app: url-shortner
+    spec:
+      containers:
+      - name: url-shortner
+        image: syedjaferkhub/url_shortner:v1.1.0
+        ports:
+        - containerPort: 8090
+        # Define resource requests and limits as needed
+        resources:
+          requests:
+            cpu: "100m" # 100 milliCPU (0.1 CPU)
+            memory: "256Mi"
+          limits:
+            cpu: "500m" # 500 milliCPU (0.5 CPU)
+            memory: "512Mi"

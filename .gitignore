@@ -1,4 +1,4 @@
-urlEnv/
+url_venv/
 *.pyc
 __pycache__
 db_data
